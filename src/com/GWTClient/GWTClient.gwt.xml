@@ -1,0 +1,15 @@
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 2.8.0//EN"
+        "http://www.gwtproject.org/doctype/2.8.0/gwt-module.dtd">
+<module rename-to="GWTClient">
+
+    <!-- Inherit the core Web Toolkit stuff.                  -->
+    <inherits name='com.google.gwt.user.User'/>
+
+    <!-- Specify the app entry point class.                   -->
+    <entry-point class='com.GWTClient.client.GWTClient'/>
+
+
+    <!-- Specify the app servlets.                   -->
+    <servlet path='/GWTClientService' class='com.GWTClient.server.GWTClientServiceImpl'/>
+
+</module>
