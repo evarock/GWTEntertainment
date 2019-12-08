@@ -1,5 +1,3 @@
-/** Add css rules here for your application. */
-
 h1 {
     font-size: 2em;
     font-weight: bold;
@@ -8,4 +6,35 @@ h1 {
 
 body, td, a, div, .p {
     font-family: arial, sans-serif
+}
+
+.main-background {
+    background-color: #33046A;
+}
+
+#osm {
+    height: 500px;
+    width: 1000px;
+    margin-top: 170px;
+    margin-left: 100px;
+}
+
+.header-html {
+    margin: 10px 0 0 300px;
+    font: 45px bold;
+    text-align: center;
+}
+
+.profile-html {
+    border-radius: 90px;
+    border: 5px solid black;
+    margin: 10px 20px 0 0;
+    font: 45px bold;
+    width: 60px;
+}
+
+.logout-button {
+    text-decoration: none;
+    font: 20px bold;
+    margin-right: 10px;
 }

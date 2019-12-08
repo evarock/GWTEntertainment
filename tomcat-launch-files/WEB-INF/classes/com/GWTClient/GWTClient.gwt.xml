@@ -4,10 +4,10 @@
     <inherits name='com.google.gwt.user.User'/>
 
     <!-- Specify the app entry point class.                   -->
-    <entry-point class='com.GWTClient.client.GWTClient'/>
+    <entry-point class='com.client.GWTClient'/>
 
 
     <!-- Specify the app servlets.                   -->
-    <servlet path='/GWTClientService' class='com.GWTClient.server.GWTClientServiceImpl'/>
+    <servlet path='/GWTClientService' class='com.server.GWTClientServiceImpl'/>
 
 </module>

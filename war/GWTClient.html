@@ -1,40 +1,18 @@
 <html>
 <head>
-
-    <!--                                           -->
-    <!-- Any title is fine                         -->
-    <!--                                           -->
-    <title>Wrapper HTML for App</title>
-
+    <title>Entertainment Facilities Portal</title>
     <link type="text/css" rel="stylesheet" href="GWTClient.css">
-
-    <!--                                            -->
-    <!-- This script is required bootstrap stuff.   -->
-    <!--                                            -->
     <script type="text/javascript" language="javascript" src="GWTClient/GWTClient.nocache.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@latest/dist/leaflet.css"
+          integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+          crossorigin="anonymous"/>
+    <script src="https://unpkg.com/leaflet@latest/dist/leaflet.js"
+            integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+            crossorigin="anonymous"></script>
 </head>
 
-<!--                                           -->
-<!-- The body can have arbitrary html, or      -->
-<!-- you can leave the body empty if you want  -->
-<!-- to create a completely dynamic ui         -->
-<!--                                           -->
 <body>
-
-<h1>Sample Application</h1>
-
-<p>
-    This is an example of a host page for the App application.
-    You can attach a Web Toolkit module to any HTML page you like,
-    making it easy to add bits of AJAX functionality to existing pages
-    without starting from scratch.
-</p>
-
-<table align="center">
-    <tr>
-        <td id="slot1"></td>
-        <td id="slot2"></td>
-    </tr>
-</table>
+   <div id="osm"></div>
+   <script type="text/javascript" language="javascript" src="MapLeaflet.js"></script>
 </body>
 </html>

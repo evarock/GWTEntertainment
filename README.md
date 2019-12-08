@@ -15,6 +15,6 @@ _Note: use `tomcat-launch-files`_
 *.other files.
 - WEB-INF folder: classes folder, lib folder, web.xml.
 - GWTClient.css.
-- GSTClient.html.
+- GWTClient.html.
 8. Zip files if it needs. Copy files in server folder.
 9. Update `tomcat-launch-files`.
