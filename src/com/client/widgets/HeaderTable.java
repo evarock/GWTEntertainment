@@ -1,6 +1,7 @@
 package com.client.widgets;
 
 import com.client.data.ClientInfo;
+import com.client.data.ServerRequests;
 import com.google.gwt.user.client.ui.*;
 
 public class HeaderTable extends FlexTable {
@@ -20,6 +21,9 @@ public class HeaderTable extends FlexTable {
         HTML headerHTML = new HTML("Facilities Portal");
         headerHTML.setStyleName("header-html");
         setWidget(0, 0, headerHTML);
+        // TODO: delete test request
+  //      ServerRequests.loadUserByClient("root");
+        ServerRequests.loadUserByServer("root");
         updateLayout();
     }
 
@@ -28,19 +32,21 @@ public class HeaderTable extends FlexTable {
         HTML logout = new HTML("Logout");
         logout.addClickHandler(event -> {
             ClientInfo.getInstance().setCurrentUser(null);
-            updateLayout();
         });
         logout.setStyleName("logout-button");
         hp.add(logout);
         hp.setCellVerticalAlignment(logout, HasVerticalAlignment.ALIGN_MIDDLE);
         Button profileButton = new Button("P");
+        profileButton.addClickHandler(event -> {
+            new ProfilePopup();
+        });
         profileButton.setStylePrimaryName("profile-html");
         hp.add(profileButton);
         setWidget(0, 1, hp);
         getFlexCellFormatter().setHorizontalAlignment(0, 1, HasHorizontalAlignment.ALIGN_RIGHT);
     }
 
-    private void updateLayout() {
+    public void updateLayout() {
         if (ClientInfo.getInstance().getCurrentUser() != null) {
             initAuthLayout();
         } else {

@@ -16,7 +16,7 @@ public class User {
     private static final String DOB_KEY = "dob";
     private static final String GENDER_KEY = "gender";
     private static final String INIT_DATE_KEY = "initDate";
-    private static final String ORGANIZATION_KEY = "isOrganization";
+    private static final String ORGANIZATION_KEY = "organization";
 
     private String username;
     private String email;

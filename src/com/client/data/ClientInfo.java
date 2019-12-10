@@ -1,5 +1,7 @@
 package com.client.data;
 
+import com.client.widgets.HeaderTable;
+
 public class ClientInfo {
     private User currentUser;
     private static ClientInfo instance;
@@ -17,5 +19,6 @@ public class ClientInfo {
 
     public void setCurrentUser(User currentUser) {
         this.currentUser = currentUser;
+        HeaderTable.getInstance().updateLayout();
     }
 }

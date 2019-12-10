@@ -1,53 +1,39 @@
 package com.client.data;
 
-import com.google.gwt.http.client.*;
+import com.client.GWTClientService;
+import com.client.GWTClientServiceAsync;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.json.client.*;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public class ServerRequests {
-    private static final String userServiceUrl = "http://localhost:8762/users/";
+    private static GWTClientServiceAsync service = GWT.create(GWTClientService.class);
 
-    public static void loadUser(String username) {
-        RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, userServiceUrl + username);
-        builder.setHeader("Accept", "application/json");
-//            builder.setHeader("Content-Type", "application/json");
-//            builder.setRequestData(new JSONObject(jso).toString());
-        try {
-            builder.sendRequest(null, new RequestCallback() {
-                @Override
-                public void onResponseReceived(Request request, Response response) {
-                    String code = Integer.toString(response.getStatusCode());
-                    if (!isSuccessfulResponse(code)) {
-                        onError(request, new Throwable("Error received code:" + code));
-                        return;
-                    }
-                    JSONObject responseJSON;
-                    try {
-                        responseJSON = JSONParser.parseStrict(response.getText()).isObject();
-                    } catch (Exception e) {
-                        onError(request, new Throwable("Failed to get response text:" + e.getMessage()));
-                        return;
-                    }
-                    User user = User.parseJson(responseJSON);
-                    if (user == null) {
-                        onError(request, new Throwable("Failed to parse response"));
-                        return;
-                    }
-                    ClientInfo.getInstance().setCurrentUser(user);
+    public static void loadUserByServer(String username) {
+        AsyncCallback<String> callback = new AsyncCallback<String>() {
+            @Override
+            public void onFailure(Throwable caught) {
+                Window.alert("Error! " + caught.getMessage());
+            }
+
+            @Override
+            public void onSuccess(String result) {
+                JSONObject responseJSON;
+                try {
+                    responseJSON = JSONParser.parseStrict(result).isObject();
+                } catch (Exception e) {
+                    onFailure(new Throwable("Failed to get response text:" + e.getMessage()));
+                    return;
                 }
-
-                @Override
-                public void onError(Request request, Throwable exception) {
-                    Window.alert("Error!" + exception.getMessage());
+                User user = User.parseJson(responseJSON);
+                if (user == null) {
+                    onFailure(new Throwable("Failed to parse response"));
+                    return;
                 }
-            });
-        }
-        catch (RequestException e) {
-            Window.alert("Request exception:" + e.getMessage());
-        }
-    }
-
-    private static boolean isSuccessfulResponse(String code) {
-        return code != null && !code.startsWith("4") && !code.startsWith("5");
+                ClientInfo.getInstance().setCurrentUser(user);
+            }
+        };
+        service.loadUser(username, callback);
     }
 }

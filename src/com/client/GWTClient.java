@@ -2,7 +2,9 @@ package com.client;
 
 import com.client.widgets.HeaderTable;
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style;
+import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.*;
 
@@ -29,6 +31,5 @@ public class GWTClient implements EntryPoint {
         RootLayoutPanel.get().setWidgetTopHeight(main, 80, Style.Unit.PX, clientHeight - 130, Style.Unit.PX);
         RootLayoutPanel.get().add(footer);
         RootLayoutPanel.get().setWidgetBottomHeight(footer, 0, Style.Unit.PX, 50, Style.Unit.PX);
-        //ServerRequests.loadUser("root");
     }
 }

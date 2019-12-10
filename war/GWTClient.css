@@ -1,22 +1,13 @@
-h1 {
-    font-size: 2em;
-    font-weight: bold;
-    text-align: center;
-}
-
 body, td, a, div, .p {
     font-family: arial, sans-serif
 }
 
-.main-background {
-    background-color: #33046A;
-}
-
 #osm {
-    height: 500px;
+    height: 400px;
     width: 1000px;
-    margin-top: 170px;
+    margin-top: 120px;
     margin-left: 100px;
+    z-index: 900;
 }
 
 .header-html {
@@ -37,4 +28,13 @@ body, td, a, div, .p {
     text-decoration: none;
     font: 20px bold;
     margin-right: 10px;
+}
+
+.edit-user-popup {
+    border-radius: 10px;
+    border: 5px solid black;
+    width: 500px;
+    height: 450px;
+    z-index: 1000;
+    background-color: #D4D7ED;
 }
