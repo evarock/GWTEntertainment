@@ -7,9 +7,10 @@ import java.util.Date;
 
 public class User {
     public enum Gender {
-        MALE, FEMALE, UNKNOWN;
+        MALE, FEMALE, UNKNOWN
     }
 
+    public static final DateTimeFormat dateTimeFormat = DateTimeFormat.getFormat("yyyy-MM-dd");
     private static final String USERNAME_KEY = "username";
     private static final String EMAIL_KEY = "email";
     private static final String PHONE_KEY = "phone";
@@ -26,17 +27,7 @@ public class User {
     private Date initDate;
     private Boolean isOrganization;
 
-    protected User() {}
-
-    public User(String username, String email, Integer phone, Date dob, Gender gender, Date initDate, Boolean isOrganization) {
-        this.username = username;
-        this.email = email;
-        this.phone = phone;
-        this.dob = dob;
-        this.gender = gender;
-        this.initDate = initDate;
-        this.isOrganization = isOrganization;
-    }
+    public User() {}
 
     public String getUsername() {
         return username;
@@ -125,7 +116,6 @@ public class User {
             Date dob = null;
             jsonValue = json.get(DOB_KEY);
             if (jsonValue != null && jsonValue.isString() != null) {
-                DateTimeFormat dateTimeFormat = DateTimeFormat.getFormat("yyyy-MM-dd");
                 dob = dateTimeFormat.parse(jsonValue.isString().stringValue());
             }
             parsedUser.setDob(dob);
@@ -133,10 +123,9 @@ public class User {
             Gender gender = Gender.UNKNOWN;
             try {
                 gender = Gender.valueOf(json.get(GENDER_KEY).isString().stringValue());
-            } catch (Exception e) {}
+            } catch (Exception ignored) {}
             parsedUser.setGender(gender);
 
-            DateTimeFormat dateTimeFormat = DateTimeFormat.getFormat("yyyy-MM-dd");
             Date initDate = dateTimeFormat.parse(json.get(INIT_DATE_KEY).isString().stringValue());
             parsedUser.setInitDate(initDate);
 
@@ -146,5 +135,24 @@ public class User {
             return null;
         }
         return parsedUser;
+    }
+
+    public static String createJson(User user) {
+        if (user == null || user.getUsername() == null || user.getInitDate() == null) {
+            return null;
+        }
+        JSONObject json = new JSONObject();
+        try {
+            json.put(USERNAME_KEY, new JSONString(user.getUsername()));
+            json.put(EMAIL_KEY, new JSONString(user.getEmail()));
+            json.put(PHONE_KEY, new JSONNumber(user.getPhone()));
+            json.put(DOB_KEY, new JSONString(user.getDob() == null ? "" : dateTimeFormat.format(user.getDob())));
+            json.put(GENDER_KEY, new JSONString(user.getGender().name()));
+            json.put(INIT_DATE_KEY, new JSONString(dateTimeFormat.format(user.getInitDate())));
+            json.put(ORGANIZATION_KEY, JSONBoolean.getInstance(user.getOrganization()));
+        } catch (Exception e) {
+            return null;
+        }
+        return json.toString();
     }
 }

@@ -1,6 +1,7 @@
 package com.client.widgets;
 
 import com.client.data.ClientInfo;
+import com.client.data.ServerRequests;
 import com.client.data.User;
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.i18n.client.DateTimeFormat;
@@ -40,7 +41,7 @@ public class ProfilePopup extends PopupPanel {
 
         content.setWidget(row, 0, new HTML("Registration Date:"));
         content.getFlexCellFormatter().setHorizontalAlignment(row, 0, HasHorizontalAlignment.ALIGN_RIGHT);
-        String iniDateStr = user.getInitDate() != null ? user.getInitDate().toString() : "";
+        String iniDateStr = user.getInitDate() != null ? User.dateTimeFormat.format(user.getInitDate()) : "";
         content.setWidget(row, 1, new HTML(iniDateStr));
         content.getFlexCellFormatter().setHorizontalAlignment(row, 1, HasHorizontalAlignment.ALIGN_LEFT);
         row++;
@@ -58,7 +59,7 @@ public class ProfilePopup extends PopupPanel {
         row++;
 
         DatePicker datePicker = new DatePicker();
-        DateTimeFormat dateFormat = DateTimeFormat.getFormat("MM-dd-yyyy");
+        DateTimeFormat dateFormat = DateTimeFormat.getFormat("yyyy-MM-dd");
         dob.setWidth("100px");
         dob.setFormat(new DateBox.DefaultFormat(dateFormat));
         datePicker.addValueChangeHandler(event -> {
@@ -71,7 +72,7 @@ public class ProfilePopup extends PopupPanel {
         dob.getElement().getStyle().setMarginRight(15, Style.Unit.PX);
         datePanel.add(datePicker);
         HTML dobHTML = new HTML("Date of birth:");
-        dobHTML.getElement().getStyle().setMarginTop(7, Style.Unit.PX);
+        dobHTML.getElement().getStyle().setMarginTop(22, Style.Unit.PX);
         content.setWidget(row, 0, dobHTML);
         content.getFlexCellFormatter().setAlignment(row, 0, HasHorizontalAlignment.ALIGN_RIGHT, HasVerticalAlignment.ALIGN_TOP);
         content.setWidget(row, 1, datePanel);
@@ -93,13 +94,20 @@ public class ProfilePopup extends PopupPanel {
 
         HorizontalPanel buttons = new HorizontalPanel();
         buttons.setWidth("100%");
-        Button submit = new Button("Submit");
+        Button submit = new Button("Update");
         submit.addClickHandler(event -> saveProfile());
+        Button delete = new Button("Delete");
+        delete.addClickHandler(event -> {
+            ServerRequests.deleteUser(user.getUsername());
+            hide();
+        });
         Button close = new Button("Close");
         close.addClickHandler(event -> hide());
         buttons.add(submit);
+        buttons.add(delete);
         buttons.add(close);
         buttons.setCellHorizontalAlignment(submit, HasHorizontalAlignment.ALIGN_CENTER);
+        buttons.setCellHorizontalAlignment(delete, HasHorizontalAlignment.ALIGN_CENTER);
         buttons.setCellHorizontalAlignment(close, HasHorizontalAlignment.ALIGN_CENTER);
         content.setWidget(row, 0, buttons);
         content.getFlexCellFormatter().setColSpan(row, 0, 2);
@@ -129,14 +137,25 @@ public class ProfilePopup extends PopupPanel {
     }
 
     private void saveProfile() {
-        int phoneValue = -1;
+        int phoneValue;
         try {
             phoneValue = phone.getValue();
         } catch (Exception e) {
             Window.alert("Invalid phone!");
             return;
         }
-        User user = ClientInfo.getInstance().getCurrentUser();
+        if (dob.getValue() == null && dob.getTextBox().getValue() != null && !dob.getTextBox().getValue().isEmpty()) {
+            Window.alert("Invalid date of birth!");
+            return;
+        }
+        User currentUser = ClientInfo.getInstance().getCurrentUser();
+        if (currentUser == null) {
+            Window.alert("Error! Current user cannot be found!");
+            hide();
+            return;
+        }
+        User user = new User();
+        user.setUsername(currentUser.getUsername());
         user.setEmail(email.getValue());
         user.setPhone(phoneValue);
         user.setDob(dob.getValue());
@@ -145,7 +164,14 @@ public class ProfilePopup extends PopupPanel {
         } else if (male.getValue() != null && male.getValue()) {
             user.setGender(User.Gender.MALE);
         }
+        user.setInitDate(currentUser.getInitDate());
         user.setOrganization(isOrganization.getValue());
+        String jsonStr = User.createJson(user);
+        if (jsonStr == null) {
+            Window.alert("Error! Failed to create json!");
+        } else {
+            ServerRequests.updateUser(jsonStr);
+        }
         hide();
     }
 }

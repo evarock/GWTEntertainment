@@ -22,24 +22,19 @@ public class HeaderTable extends FlexTable {
         headerHTML.setStyleName("header-html");
         setWidget(0, 0, headerHTML);
         // TODO: delete test request
-  //      ServerRequests.loadUserByClient("root");
-        ServerRequests.loadUserByServer("root");
+       // ServerRequests.loadUserByServer("admin_d");
         updateLayout();
     }
 
     private void initAuthLayout() {
         HorizontalPanel hp = new HorizontalPanel();
         HTML logout = new HTML("Logout");
-        logout.addClickHandler(event -> {
-            ClientInfo.getInstance().setCurrentUser(null);
-        });
+        logout.addClickHandler(event -> ClientInfo.getInstance().setCurrentUser(null));
         logout.setStyleName("logout-button");
         hp.add(logout);
         hp.setCellVerticalAlignment(logout, HasVerticalAlignment.ALIGN_MIDDLE);
         Button profileButton = new Button("P");
-        profileButton.addClickHandler(event -> {
-            new ProfilePopup();
-        });
+        profileButton.addClickHandler(event -> new ProfilePopup());
         profileButton.setStylePrimaryName("profile-html");
         hp.add(profileButton);
         setWidget(0, 1, hp);
@@ -57,16 +52,12 @@ public class HeaderTable extends FlexTable {
     private void initCommonLayout() {
         HorizontalPanel hp = new HorizontalPanel();
         HTML signin = new HTML("Sign in");
-        signin.addClickHandler(event -> {
-
-        });
+        signin.addClickHandler(event -> new AuthPopup(true));
         signin.setStyleName("logout-button");
         hp.add(signin);
         hp.setCellVerticalAlignment(signin, HasVerticalAlignment.ALIGN_MIDDLE);
         HTML signup = new HTML("Sign up");
-        signup.addClickHandler(event -> {
-
-        });
+        signup.addClickHandler(event -> new AuthPopup(false));
         signup.setStyleName("logout-button");
         hp.add(signup);
         hp.setCellVerticalAlignment(signup, HasVerticalAlignment.ALIGN_MIDDLE);

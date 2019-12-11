@@ -38,3 +38,12 @@ body, td, a, div, .p {
     z-index: 1000;
     background-color: #D4D7ED;
 }
+
+.auth-popup {
+    border-radius: 10px;
+    border: 5px solid black;
+    width: 400px;
+    height: 250px;
+    z-index: 1000;
+    background-color: #D4D7ED;
+}

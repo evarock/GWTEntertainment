@@ -13,7 +13,9 @@ import java.nio.charset.StandardCharsets;
 
 public class GWTClientServiceImpl extends RemoteServiceServlet implements GWTClientService {
     private static final String userServiceUrl = "http://localhost:8762/users/";
+    private static final String authServiceUrl = "http://localhost:8762/auth/";
 
+    @Override
     public String loadUser(String username) throws IllegalArgumentException {
         StringBuilder sb = new StringBuilder();
         HttpURLConnection con = null;
@@ -40,19 +42,16 @@ public class GWTClientServiceImpl extends RemoteServiceServlet implements GWTCli
             try {
                 if (inStream != null) {
                     inStream.close();
-                    inStream = null;
                 }
             } catch (Exception ignored) {}
             try {
                 if (reader != null) {
                     reader.close();
-                    reader = null;
                 }
             } catch (Exception ignored) {}
             try {
                 if (innerException != null && con != null) {
                     con.disconnect();
-                    con = null;
                 }
             } catch (Exception ignored) {}
         }
@@ -62,6 +61,7 @@ public class GWTClientServiceImpl extends RemoteServiceServlet implements GWTCli
         return sb.toString();
     }
 
+    @Override
     public String updateUser(String jsonMsg) throws IllegalArgumentException {
         StringBuilder sb = new StringBuilder();
         HttpURLConnection con = null;
@@ -73,7 +73,7 @@ public class GWTClientServiceImpl extends RemoteServiceServlet implements GWTCli
             con = (HttpURLConnection) new URL(userServiceUrl).openConnection();
             con.setDoOutput(true);
             con.setDoInput(true);
-            con.setRequestMethod("POST");
+            con.setRequestMethod("PUT");
             con.setAllowUserInteraction(true);
             con.setUseCaches(false);
 //            con.setInstanceFollowRedirects(false);
@@ -98,25 +98,21 @@ public class GWTClientServiceImpl extends RemoteServiceServlet implements GWTCli
             try {
                 if (outStream != null) {
                     outStream.close();
-                    outStream = null;
                 }
             } catch (Exception ignored) { }
             try {
                 if (inStream != null) {
                     inStream.close();
-                    inStream = null;
                 }
             } catch (Exception ignored) {}
             try {
                 if (reader != null) {
                     reader.close();
-                    reader = null;
                 }
             } catch (Exception ignored) {}
             try {
                 if (innerException != null && con != null) {
                     con.disconnect();
-                    con = null;
                 }
             } catch (Exception ignored) {}
         }
@@ -124,5 +120,112 @@ public class GWTClientServiceImpl extends RemoteServiceServlet implements GWTCli
             return innerException.getMessage();
         }
         return sb.toString();
+    }
+
+    @Override
+    public void deleteUser(String username) throws IllegalArgumentException {
+        HttpURLConnection con = null;
+        InputStream inStream = null;
+        BufferedReader reader = null;
+        Exception innerException = null;
+        try {
+            con = (HttpURLConnection) new URL(userServiceUrl + username).openConnection();
+            con.setDoOutput(false);
+            con.setDoInput(true);
+            con.setAllowUserInteraction(true);
+            con.setUseCaches(false);
+            con.setRequestMethod("DELETE");
+            con.setRequestProperty("Accept", "application/json");
+            con.setRequestProperty("charset", "utf-8");
+            inStream = con.getResponseCode() < 400 ? con.getInputStream() : con.getErrorStream();
+            reader = new BufferedReader(new InputStreamReader(inStream));
+            String line;
+            StringBuilder sb = new StringBuilder();
+            while ((line = reader.readLine()) != null) {
+                sb.append(line);
+            }
+        } catch (Exception e) {
+            innerException = e;
+        } finally {
+            try {
+                if (inStream != null) {
+                    inStream.close();
+                }
+            } catch (Exception ignored) {}
+            try {
+                if (reader != null) {
+                    reader.close();
+                }
+            } catch (Exception ignored) {}
+            try {
+                if (innerException != null && con != null) {
+                    con.disconnect();
+                }
+            } catch (Exception ignored) {}
+        }
+    }
+
+    @Override
+    public void loadUserWithAuth(String jsonMessage) throws IllegalArgumentException {
+        StringBuilder sb = new StringBuilder();
+        HttpURLConnection con = null;
+        OutputStream outStream = null;
+        InputStream inStream = null;
+        BufferedReader reader = null;
+        Exception innerException = null;
+        try {
+            con = (HttpURLConnection) new URL(authServiceUrl + "get/").openConnection();
+            con.setDoOutput(true);
+            con.setDoInput(true);
+            con.setRequestMethod("POST");
+            con.setUseCaches(false);
+            con.setRequestProperty("Content-Type", "application/json");
+            con.setRequestProperty("Accept", "application/json");
+            con.setRequestProperty("charset", "utf-8");
+            con.setRequestProperty("Content-Length", Integer.toString(jsonMessage.length()));
+            outStream = con.getOutputStream();
+            outStream.write(jsonMessage.getBytes(StandardCharsets.UTF_8));
+            outStream.flush();
+            outStream.close();
+            outStream = null;
+            inStream = con.getResponseCode() < 400 ? con.getInputStream() : con.getErrorStream();
+            reader = new BufferedReader(new InputStreamReader(inStream));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                sb.append(line);
+            }
+        } catch (Exception e) {
+            innerException = e;
+        } finally {
+            try {
+                if (outStream != null) {
+                    outStream.close();
+                }
+            } catch (Exception ignored) { }
+            try {
+                if (inStream != null) {
+                    inStream.close();
+                }
+            } catch (Exception ignored) {}
+            try {
+                if (reader != null) {
+                    reader.close();
+                }
+            } catch (Exception ignored) {}
+            try {
+                if (innerException != null && con != null) {
+                    con.disconnect();
+                }
+            } catch (Exception ignored) {}
+        }
+        if (innerException != null) {
+  //          return innerException.getMessage();
+        }
+ //       return sb.toString();
+    }
+
+    @Override
+    public String registerUser(String jsonMessage) throws IllegalArgumentException {
+        return null;
     }
 }
