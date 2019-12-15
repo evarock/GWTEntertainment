@@ -5,8 +5,8 @@ body, td, a, div, .p {
 #osm {
     height: 400px;
     width: 1000px;
-    margin-top: 120px;
-    margin-left: 100px;
+    margin-top: 160px;
+    margin-left: 120px;
     z-index: 900;
 }
 

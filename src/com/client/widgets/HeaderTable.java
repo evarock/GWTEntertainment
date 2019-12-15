@@ -1,7 +1,7 @@
 package com.client.widgets;
 
 import com.client.data.ClientInfo;
-import com.client.data.ServerRequests;
+import com.google.gwt.dom.client.Style;
 import com.google.gwt.user.client.ui.*;
 
 public class HeaderTable extends FlexTable {
@@ -18,11 +18,9 @@ public class HeaderTable extends FlexTable {
         setWidth("100%");
         setCellPadding(0);
         setCellSpacing(0);
-        HTML headerHTML = new HTML("Facilities Portal");
+        HTML headerHTML = new HTML("User Facilities Portal");
         headerHTML.setStyleName("header-html");
         setWidget(0, 0, headerHTML);
-        // TODO: delete test request
-       // ServerRequests.loadUserByServer("admin_d");
         updateLayout();
     }
 

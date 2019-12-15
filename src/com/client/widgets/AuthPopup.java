@@ -75,9 +75,9 @@ public class AuthPopup extends PopupPanel {
         if (jsonStr == null) {
             Window.alert("Error! Failed to create json!");
         } else if (isAuth) {
-            ServerRequests.loadUserWithAuth(username.getValue(), jsonStr);
+            ServerRequests.loadUser(jsonStr);
         } else {
-            // TODO register user
+            ServerRequests.registerUser(jsonStr);
         }
         hide();
     }

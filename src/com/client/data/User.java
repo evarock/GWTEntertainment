@@ -147,7 +147,7 @@ public class User {
             json.put(EMAIL_KEY, new JSONString(user.getEmail()));
             json.put(PHONE_KEY, new JSONNumber(user.getPhone()));
             json.put(DOB_KEY, new JSONString(user.getDob() == null ? "" : dateTimeFormat.format(user.getDob())));
-            json.put(GENDER_KEY, new JSONString(user.getGender().name()));
+            json.put(GENDER_KEY, new JSONString(user.getGender() == null ? Gender.UNKNOWN.name() : user.getGender().name()));
             json.put(INIT_DATE_KEY, new JSONString(dateTimeFormat.format(user.getInitDate())));
             json.put(ORGANIZATION_KEY, JSONBoolean.getInstance(user.getOrganization()));
         } catch (Exception e) {

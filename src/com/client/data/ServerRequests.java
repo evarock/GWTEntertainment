@@ -10,24 +10,12 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 public class ServerRequests {
     private static GWTClientServiceAsync service = GWT.create(GWTClientService.class);
 
-    public static void loadUser(String username) {
-        service.loadUser(username, createUserCallback());
+    public static void loadUser(String jsonMsg) {
+        service.loadUser(jsonMsg, createUserCallback());
     }
 
-    public static void loadUserWithAuth(String username, String jsonMsg) {
-//        service.loadUserWithAuth(jsonMsg, createUserCallback());
-        service.loadUserWithAuth(jsonMsg, new AsyncCallback<Void>() {
-            @Override
-            public void onFailure(Throwable caught) {
-                Window.alert("Error! " + caught.getMessage());
-                ClientInfo.getInstance().setCurrentUser(null);
-            }
-
-            @Override
-            public void onSuccess(Void result) {
-                loadUser(username);
-            }
-        });
+    public static void registerUser(String jsonMsg) {
+        service.registerUser(jsonMsg, createUserCallback());
     }
 
     public static void updateUser(String jsonMsg) {
