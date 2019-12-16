@@ -3,7 +3,7 @@ body, td, a, div, .p {
 }
 
 #osm {
-    height: 400px;
+    height: 350px;
     width: 1000px;
     margin-top: 160px;
     margin-left: 120px;
@@ -13,6 +13,12 @@ body, td, a, div, .p {
 .header-html {
     margin: 10px 0 0 300px;
     font: 45px bold;
+    text-align: center;
+}
+
+.hello-html {
+    margin-top: 20px;
+    font: 25px bold;
     text-align: center;
 }
 

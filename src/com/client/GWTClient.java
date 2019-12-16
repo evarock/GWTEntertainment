@@ -13,6 +13,9 @@ public class GWTClient implements EntryPoint {
         header.getElement().getStyle().setBackgroundColor("#41428d");
         header.add(HeaderTable.getInstance());
         AbsolutePanel main = new AbsolutePanel();
+        HTML hello = new HTML("Log up to use Facilities Portal");
+        hello.setStyleName("hello-html");
+        main.add(hello);
         main.getElement().getStyle().setBackgroundColor("#D4D7ED");
         AbsolutePanel footer = new AbsolutePanel();
         footer.getElement().getStyle().setBackgroundColor("#41428d");

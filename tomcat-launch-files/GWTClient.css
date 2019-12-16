@@ -1,11 +1,55 @@
-/** Add css rules here for your application. */
+body, td, a, div, .p {
+    font-family: arial, sans-serif
+}
 
-h1 {
-    font-size: 2em;
-    font-weight: bold;
+#osm {
+    height: 350px;
+    width: 1000px;
+    margin-top: 160px;
+    margin-left: 120px;
+    z-index: 900;
+}
+
+.header-html {
+    margin: 10px 0 0 300px;
+    font: 45px bold;
     text-align: center;
 }
 
-body, td, a, div, .p {
-    font-family: arial, sans-serif
+.hello-html {
+    margin-top: 20px;
+    font: 25px bold;
+    text-align: center;
+}
+
+.profile-html {
+    border-radius: 90px;
+    border: 5px solid black;
+    margin: 10px 20px 0 0;
+    font: 45px bold;
+    width: 60px;
+}
+
+.logout-button {
+    text-decoration: none;
+    font: 20px bold;
+    margin-right: 10px;
+}
+
+.edit-user-popup {
+    border-radius: 10px;
+    border: 5px solid black;
+    width: 500px;
+    height: 450px;
+    z-index: 1000;
+    background-color: #D4D7ED;
+}
+
+.auth-popup {
+    border-radius: 10px;
+    border: 5px solid black;
+    width: 400px;
+    height: 250px;
+    z-index: 1000;
+    background-color: #D4D7ED;
 }
