@@ -18,9 +18,10 @@ _Second option:_
 - WEB-INF folder: classes folder, lib folder, web.xml.
 - GWTClient.css.
 - GWTClient.html.
-8. Zip files if it needs. Rename *.zip to *.war.
-9. Copy files in server folder.
-10. Update `tomcat-launch-files`.
+8. Update `tomcat-launch-files`.
+
+1) Zip files if it needs. Rename `GWTClient.zip` to `GWTClient.war`.
+2) Copy files in server folder.
 
 **Final step:** open `/GWTClient/GWTClient.html` or `/GWTClient`.
 https://www.tutorialspoint.com/gwt/gwt_deploy_application.htm
